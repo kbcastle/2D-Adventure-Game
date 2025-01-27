@@ -2,4 +2,4 @@
 
 Do not leave blank.
 
-this game has been changed
+This game is now a 2D adventure game.
