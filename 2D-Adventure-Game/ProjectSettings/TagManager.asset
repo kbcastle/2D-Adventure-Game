@@ -7,6 +7,7 @@ TagManager:
   - Key
   - Enemy
   - Death
+  - Item
   layers:
   - Default
   - TransparentFX

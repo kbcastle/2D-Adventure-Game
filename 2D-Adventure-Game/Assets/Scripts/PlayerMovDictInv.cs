@@ -1,32 +1,39 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class PlayerMovement : MonoBehaviour
+
+public class PlayerMovDictInv : MonoBehaviour
 {
-    public static PlayerMovement Instance;
+    public static PlayerMovDictInv Instance;
 
     public GameObject player;
     public float speed = 0.2f;
 
-    public List<string> myInventory;
-    // Start is called before the first frame update
+    public Dictionary<string, int> myInventory = new Dictionary<string, int>();
+
+    public TextMeshProUGUI inventoryDisplay;
+    
     private void Awake()
     {
         if (Instance == null)
         {
-            DontDestroyOnLoad(gameObject);
-            Instance = this;
+            DontDestroyOnLoad(gameObject); //don't destroy the player when a new scene loads
+            Instance = this; //set this specific player object as the Instance
         }
         else
         {
-            Destroy(gameObject);
+            Destroy(gameObject); //if there is already a player assigned as the Instance, delete any other players so we only have one
         }
     }
 
     void Start()
     {
-        
+        //add any items you can possibly obtain in the game, with quantity at zero if you do not start with this item in your inventory
+        myInventory.Add("Sword", 1);
+        DisplayInventory();
     }
 
     // Update is called once per frame
@@ -66,14 +73,19 @@ public class PlayerMovement : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         //when entering a trigger destroy the player
-        if(other.tag == "Death")
+        if (other.tag == "Death")
         {
-            Destroy(player);    
+            Destroy(player);
         }
     }
 
-    public void addInventory(string item)
+    public void DisplayInventory()
     {
-        myInventory.Add(item);
+        inventoryDisplay.text = "";
+
+        foreach (var item in myInventory)
+        {
+            inventoryDisplay.text += "Item: " + item.Key + ", Quantity: " + item.Value + "\n";
+        }
     }
 }
