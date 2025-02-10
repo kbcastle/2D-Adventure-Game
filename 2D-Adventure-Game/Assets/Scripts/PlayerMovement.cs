@@ -10,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
     public float speed = 0.2f;
 
     public List<string> myInventory;
+    public bool inventoryFull = false;
     // Start is called before the first frame update
     private void Awake()
     {
@@ -52,6 +53,16 @@ public class PlayerMovement : MonoBehaviour
         {
             player.transform.position += Vector3.right * speed;
         }
+
+        if (myInventory.Count > 5)
+        {
+            inventoryFull = true;
+        }
+
+        if (myInventory.Count <= 5)
+        {
+            inventoryFull = false;
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -74,6 +85,9 @@ public class PlayerMovement : MonoBehaviour
 
     public void addInventory(string item)
     {
-        myInventory.Add(item);
+        if (inventoryFull == false)
+        {
+            myInventory.Add(item);
+        }
     }
 }
